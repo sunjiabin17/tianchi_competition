@@ -19,8 +19,8 @@ $$
 #### 模型
 
 1. 线性回归(Linear Regression)
-2. 岭回归(Ridge Regression)
-3. LASSP(Least Absolute Shrinkage and Selection Opterator)回归
+2. 岭回归(Ridge Regression) (L2正则)
+3. LASSO(Least Absolute Shrinkage and Selection Opterator)回归 (L1正则)
 4. 决策树回归(Decision Tree Regressor)
 5. 梯度提升树回归(Gradient Boosting Decision Tree Regressor)
 
@@ -201,3 +201,45 @@ $$
 2. ##### LightGBM回归模型
 
    LightGBM是微软开发的一个GBDT算法框架，支持高效率的并行训练，具有更快的训练速度、更低的内存消耗、更好的准确率、分布式支持、可以快速处理海量数据等特征。
+
+## 5 模型验证
+
+### 5.1 模型评估的概念和方法
+
+#### 5.1.1 过拟合和欠拟合
+
+#### 5.1.2 模型的泛化与正则化
+
+- 岭回归（L2）和LASSO回归（L1） 不同之处：
+  1. 使用岭回归改进的多项式回归算法，随着𝛂的改变，拟合曲线始终是曲线，直到最后变成一条几乎水平的直线；也就是说，在使用岭回归之后多项式回归算法在模型变量前还是有系数的，因此很难得到一条斜的直线。
+  2. 而使用LASSO回归改进的多项式回归算法，随着𝛂的改变，拟合曲线会很快变成一条斜的曲线，最后慢慢变成一条几乎水平的直线，即模型更倾向于一条直线。
+
+#### 5.1.3 回归模型的评估指标和调用方法
+
+1. 平均绝对误差
+   $$
+   MAE = \frac{1}{n}\sum_{i=1}^{n}{|f_i-y_i|}=\frac{1}{n}\sum_{i=1}^{n}{|e_i|}
+   $$
+
+2. 均方误差:  $y_i$实际值， $\hat{y}_i$ 预测值
+   $$
+   MSE = \frac{1}{n}\sum_{i=1}^{n}{(y_i-\hat{y}_i)^2}
+   $$
+
+3. 均方根误差
+
+$$
+RMSE = \sqrt{MSE} = \sqrt{SSE/N} = \frac{1}{n}\sqrt{\sum_{i=1}^{n}{w_i(y_i-\hat{y}_i)^2}}
+$$
+
+4. R平方值
+   $$
+   R^2(y,\hat y) = 1 - \frac{\sum_{i=0}^{n_{samples}-1}{(y_i - \hat{y}_i)^2}}{\sum_{i=0}^{n_{samples}-1}{(y_i - \bar{y}_i)^2}}
+   $$
+
+#### 5.1.4 交叉验证
+
+1. 简单交叉验证
+2. K折交叉验证
+3. 留一法交叉验证
+4. 留P法交叉验证
